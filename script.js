@@ -2,50 +2,90 @@ let totalSeconds = 0;
 let interval = null;
 let paused = false;
 
-const h = document.getElementById("hours");
-const m = document.getElementById("minutes");
-const s = document.getElementById("seconds");
+const hoursBox = document.getElementById("hours");
+const minutesBox = document.getElementById("minutes");
+const secondsBox = document.getElementById("seconds");
 const secondsCard = document.getElementById("seconds-card");
 
 const tickSound = document.getElementById("tick");
 const finalSound = document.getElementById("final");
 
-/* BUTTON REFERENCES */
-const startBtn = document.querySelector(".buttons button:nth-child(1)");
-const pauseBtn = document.querySelector(".buttons button:nth-child(2)");
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const resetBtn = document.getElementById("resetBtn");
 
-/* START TIMER */
+const indicator = document.querySelector(".pill-indicator");
+
+const inputHours = document.getElementById("setHours");
+const inputMinutes = document.getElementById("setMinutes");
+const inputSeconds = document.getElementById("setSeconds");
+
+const endMessages = [
+  "Time’s up. Take a quick break.",
+  "Countdown finished. Ready for the next one?",
+  "No seconds left. Try again.",
+  "That went fast. Reset and go again.",
+  "Timer ended. Good effort.",
+  "The clock reached zero. Start a new round.",
+  "Done. Your countdown is complete.",
+  "Out of time. Want another try?"
+];
+
+function moveIndicatorTo(index) {
+  const segmentWidth = indicator.offsetWidth;
+  const leftOffset = 8 + index * (segmentWidth + 10);
+  indicator.style.left = leftOffset + "px";
+}
+
+function lockInputs(lock) {
+  inputHours.disabled = lock;
+  inputMinutes.disabled = lock;
+  inputSeconds.disabled = lock;
+}
+
+function updateUI() {
+  const hrs = Math.floor(totalSeconds / 3600);
+  const mins = Math.floor((totalSeconds % 3600) / 60);
+  const secs = totalSeconds % 60;
+
+  hoursBox.textContent = String(hrs).padStart(2, "0");
+  minutesBox.textContent = String(mins).padStart(2, "0");
+  secondsBox.textContent = String(secs).padStart(2, "0");
+}
+
 function startTimer() {
-  /* Prevent restart */
   if (interval) return;
 
-  const hrs = +setHours.value || 0;
-  const mins = +setMinutes.value || 0;
-  const secs = +setSeconds.value || 0;
+  const hrs = Number(inputHours.value) || 0;
+  const mins = Number(inputMinutes.value) || 0;
+  const secs = Number(inputSeconds.value) || 0;
 
   totalSeconds = hrs * 3600 + mins * 60 + secs;
-
   if (totalSeconds === 0) return;
 
   paused = false;
   pauseBtn.textContent = "Pause";
 
-  /* Disable Start*/
   startBtn.disabled = true;
+  lockInputs(true);
 
+  startBtn.classList.add("active");
+  pauseBtn.classList.remove("active");
+  resetBtn.classList.remove("active");
+
+  moveIndicatorTo(0);
 
   updateUI();
   interval = setInterval(runTimer, 1000);
 }
 
-/* COUNTDOWN */
 function runTimer() {
   if (paused) return;
 
   if (totalSeconds <= 0) {
     clearInterval(interval);
     interval = null;
-    endPopup();
+    showPopup();
     return;
   }
 
@@ -67,26 +107,29 @@ function runTimer() {
   updateUI();
 }
 
-/* UPDATE UI */
-function updateUI() {
-  const hrs = Math.floor(totalSeconds / 3600);
-  const mins = Math.floor((totalSeconds % 3600) / 60);
-  const secs = totalSeconds % 60;
-
-  h.textContent = String(hrs).padStart(2, "0");
-  m.textContent = String(mins).padStart(2, "0");
-  s.textContent = String(secs).padStart(2, "0");
-}
-
-/* PAUSE / RESUME */
 function pauseTimer() {
   if (!interval) return;
 
   paused = !paused;
-  pauseBtn.textContent = paused ? "Resume" : "Pause";
+
+  if (paused) {
+    pauseBtn.textContent = "Resume";
+
+    pauseBtn.classList.add("active");
+    startBtn.classList.remove("active");
+    resetBtn.classList.remove("active");
+
+    moveIndicatorTo(1);
+  } else {
+    pauseBtn.textContent = "Pause";
+
+    startBtn.classList.add("active");
+    pauseBtn.classList.remove("active");
+
+    moveIndicatorTo(0);
+  }
 }
 
-/* RESET */
 function resetTimer() {
   clearInterval(interval);
   interval = null;
@@ -95,20 +138,28 @@ function resetTimer() {
 
   secondsCard.classList.remove("urgent");
 
-  h.textContent = "00";
-  m.textContent = "00";
-  s.textContent = "00";
-
+  startBtn.disabled = false;
   pauseBtn.textContent = "Pause";
 
-  /*  Re-enable Start button */
-  startBtn.disabled = false;
-  startBtn.style.opacity = "1";
-  startBtn.style.cursor = "pointer";
+  lockInputs(false);
+
+  startBtn.classList.remove("active");
+  pauseBtn.classList.remove("active");
+  resetBtn.classList.add("active");
+
+  moveIndicatorTo(2);
+
+  setTimeout(() => {
+    resetBtn.classList.remove("active");
+    moveIndicatorTo(0);
+  }, 600);
+
+  updateUI();
 }
 
-/* POPUP */
-function endPopup() {
+function showPopup() {
+  const msg = document.getElementById("popup-message");
+  msg.textContent = endMessages[Math.floor(Math.random() * endMessages.length)];
   document.getElementById("popup").style.display = "flex";
 }
 
@@ -117,14 +168,15 @@ function closePopup() {
   resetTimer();
 }
 
-/* PARTICLES BACKGROUND */
+/* Particle Background */
+
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
-let particles = Array.from({ length: 60 }, () => ({
+const particles = Array.from({ length: 60 }, () => ({
   x: Math.random() * canvas.width,
   y: Math.random() * canvas.height,
   r: Math.random() * 2 + 1,
