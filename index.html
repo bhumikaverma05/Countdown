@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Linpack Countdown</title>
 
-  <!-- ✅ Fonts -->
   <link href="https://fonts.cdnfonts.com/css/leaves-brown" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/st-lucia" rel="stylesheet">
 
@@ -13,53 +12,44 @@
 </head>
 
 <body>
-
-  <!-- Particle Background -->
   <canvas id="particles"></canvas>
 
   <div class="app">
-
-    <!-- Main Title -->
     <h1 class="main-title">COUNTDOWN</h1>
 
-    <!-- Timer -->
     <div class="timer">
       <div class="card" id="hours">00</div>
       <div class="card" id="minutes">00</div>
-
       <div class="card" id="seconds-card">
         <span id="seconds">00</span>
       </div>
     </div>
 
-    <!-- Inputs -->
     <div class="controls">
       <input type="number" id="setHours" placeholder="Hrs" min="0">
       <input type="number" id="setMinutes" placeholder="Min" min="0">
       <input type="number" id="setSeconds" placeholder="Sec" min="0">
     </div>
 
-    <!-- Buttons -->
     <div class="buttons">
-      <button onclick="startTimer()">Start</button>
-      <button onclick="pauseTimer()">Pause</button>
-      <button onclick="resetTimer()">Reset</button>
+      <div class="pill-indicator"></div>
+
+      <button id="startBtn" onclick="startTimer()">Start</button>
+      <button id="pauseBtn" onclick="pauseTimer()">Pause</button>
+      <button id="resetBtn" onclick="resetTimer()">Reset</button>
     </div>
 
-    <!-- Bottom Branding -->
     <h2 class="club-bottom">Linpack Club</h2>
   </div>
 
-  <!-- Popup Modal -->
   <div id="popup" class="popup">
     <div class="popup-box">
-      <h2>⏳ Oops!</h2>
-      <p>You ran out of time!</p>
+      <h2>Time Over</h2>
+      <p id="popup-message">You ran out of time.</p>
       <button onclick="closePopup()">OK</button>
     </div>
   </div>
 
-  <!-- Sounds -->
   <audio id="tick" src="https://assets.mixkit.co/sfx/preview/mixkit-clock-tick-1045.mp3"></audio>
   <audio id="final" src="https://assets.mixkit.co/sfx/preview/mixkit-fast-countdown-922.mp3"></audio>
 
