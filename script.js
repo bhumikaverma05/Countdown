@@ -10,19 +10,29 @@ const secondsCard = document.getElementById("seconds-card");
 const tickSound = document.getElementById("tick");
 const finalSound = document.getElementById("final");
 
+/* BUTTON REFERENCES */
+const startBtn = document.querySelector(".buttons button:nth-child(1)");
+const pauseBtn = document.querySelector(".buttons button:nth-child(2)");
+
 /* START TIMER */
 function startTimer() {
+  /* Prevent restart */
   if (interval) return;
 
-  if (totalSeconds === 0) {
-    const hrs = +setHours.value || 0;
-    const mins = +setMinutes.value || 0;
-    const secs = +setSeconds.value || 0;
+  const hrs = +setHours.value || 0;
+  const mins = +setMinutes.value || 0;
+  const secs = +setSeconds.value || 0;
 
-    totalSeconds = hrs * 3600 + mins * 60 + secs;
-  }
+  totalSeconds = hrs * 3600 + mins * 60 + secs;
 
   if (totalSeconds === 0) return;
+
+  paused = false;
+  pauseBtn.textContent = "Pause";
+
+  /* Disable Start*/
+  startBtn.disabled = true;
+
 
   updateUI();
   interval = setInterval(runTimer, 1000);
@@ -68,9 +78,12 @@ function updateUI() {
   s.textContent = String(secs).padStart(2, "0");
 }
 
-/* PAUSE */
+/* PAUSE / RESUME */
 function pauseTimer() {
+  if (!interval) return;
+
   paused = !paused;
+  pauseBtn.textContent = paused ? "Resume" : "Pause";
 }
 
 /* RESET */
@@ -85,6 +98,13 @@ function resetTimer() {
   h.textContent = "00";
   m.textContent = "00";
   s.textContent = "00";
+
+  pauseBtn.textContent = "Pause";
+
+  /*  Re-enable Start button */
+  startBtn.disabled = false;
+  startBtn.style.opacity = "1";
+  startBtn.style.cursor = "pointer";
 }
 
 /* POPUP */
@@ -132,13 +152,3 @@ function animateParticles() {
 }
 
 animateParticles();
-
-/* ✅ AUTO START WHEN USER ENTERS TIME */
-document.querySelectorAll(".controls input").forEach(input => {
-  input.addEventListener("input", () => {
-    if (!interval) {
-      totalSeconds = 0; // reset old value
-      startTimer();     // start immediately
-    }
-  });
-});
