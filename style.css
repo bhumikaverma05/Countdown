@@ -138,3 +138,10 @@ canvas {
   50% { transform: rotateX(-90deg); }
   100% { transform: rotateX(0deg); }
 }
+
+/* Disabled Button Styling */
+.buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
