@@ -1,8 +1,9 @@
+/* ✅ Leaves Brown applied globally */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Leaves Brown", cursive;
 }
 
 body {
@@ -28,8 +29,9 @@ canvas {
   align-items: center;
 }
 
-/* COUNTDOWN Heading */
+/* ✅ Heading uses St Lucia */
 .main-title {
+  font-family: "St Lucia", serif;
   font-size: 3rem;
   font-weight: 900;
   letter-spacing: 10px;
