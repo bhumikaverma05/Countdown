@@ -1,4 +1,3 @@
-/* ✅ Leaves Brown applied globally */
 * {
   margin: 0;
   padding: 0;
@@ -29,7 +28,6 @@ canvas {
   align-items: center;
 }
 
-/* ✅ Heading uses St Lucia */
 .main-title {
   font-family: "St Lucia", serif;
   font-size: 3rem;
@@ -44,7 +42,6 @@ canvas {
   text-shadow: 0 0 25px rgba(0, 234, 255, 0.6);
 }
 
-/* Timer Cards */
 .timer {
   display: flex;
   gap: 20px;
@@ -62,12 +59,10 @@ canvas {
   box-shadow: inset 0 -6px 0 #000, 0 10px 30px rgba(0,0,0,0.6);
 }
 
-/* Urgent */
 .urgent {
   color: red;
 }
 
-/* Inputs */
 .controls {
   margin: 30px 0;
 }
@@ -81,22 +76,59 @@ canvas {
   text-align: center;
 }
 
-/* Buttons */
-.buttons button {
-  margin: 5px;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
+.controls input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.buttons {
+  position: relative;
+  display: flex;
+  width: 360px;
+  padding: 8px;
+  gap: 10px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.7);
+}
+
+.pill-indicator {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: calc((360px - 16px - 20px) / 3);
+  height: 44px;
+  border-radius: 40px;
   background: #00eaff;
-  font-weight: bold;
+  box-shadow: 0 0 18px rgba(0, 234, 255, 0.85);
+  transition: left 0.35s ease;
+  z-index: 0;
 }
 
-.buttons button:hover {
-  background: #ff00ff;
+.buttons button {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  background: transparent;
+  color: white;
+  transition: 0.25s ease;
+  z-index: 1;
 }
 
-/* Bottom Branding */
+.buttons button.active {
+  color: black;
+}
+
+.buttons button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: blur(1px);
+}
+
 .club-bottom {
   margin-top: 40px;
   font-size: 1.6rem;
@@ -108,7 +140,6 @@ canvas {
   -webkit-text-fill-color: transparent;
 }
 
-/* Popup */
 .popup {
   position: fixed;
   inset: 0;
@@ -128,7 +159,196 @@ canvas {
   box-shadow: 0 0 40px magenta;
 }
 
-/* Flip Animation */
+.flip {
+  animation: flipDown 0.4s ease;
+}
+
+@keyframes flipDown {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0deg); }
+}* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Leaves Brown", cursive;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: #0b0e14;
+  color: white;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.app {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-title {
+  font-family: "St Lucia", serif;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 10px;
+  margin-bottom: 60px;
+
+  background: linear-gradient(90deg, #ffffff, #00eaff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 0 25px rgba(0, 234, 255, 0.6);
+}
+
+.timer {
+  display: flex;
+  gap: 20px;
+}
+
+.card {
+  width: 120px;
+  height: 140px;
+  background: linear-gradient(#222, #111);
+  border-radius: 12px;
+  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 -6px 0 #000, 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.urgent {
+  color: red;
+}
+
+.controls {
+  margin: 30px 0;
+}
+
+.controls input {
+  width: 80px;
+  padding: 10px;
+  margin: 0 5px;
+  border-radius: 6px;
+  border: none;
+  text-align: center;
+}
+
+.controls input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.buttons {
+  position: relative;
+  display: flex;
+  width: 360px;
+  padding: 8px;
+  gap: 10px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.7);
+}
+
+.pill-indicator {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: calc((360px - 16px - 20px) / 3);
+  height: 44px;
+  border-radius: 40px;
+  background: #00eaff;
+  box-shadow: 0 0 18px rgba(0, 234, 255, 0.85);
+  transition: left 0.35s ease;
+  z-index: 0;
+}
+
+.buttons button {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  background: transparent;
+  color: white;
+  transition: 0.25s ease;
+  z-index: 1;
+}
+
+.buttons button.active {
+  color: black;
+}
+
+.buttons button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: blur(1px);
+}
+
+.club-bottom {
+  margin-top: 40px;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 4px;
+
+  background: linear-gradient(90deg, #00eaff, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.popup-box {
+  background: #111;
+  border: 2px solid cyan;
+  padding: 35px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(0, 234, 255, 0.4);
+  width: 320px;
+}
+
+.popup-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.popup-box p {
+  font-size: 1.1rem;
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+.popup-box button {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #00eaff;
+  font-weight: bold;
+}
+
 .flip {
   animation: flipDown 0.4s ease;
 }
@@ -139,9 +359,3 @@ canvas {
   100% { transform: rotateX(0deg); }
 }
 
-/* Disabled Button Styling */
-.buttons button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
