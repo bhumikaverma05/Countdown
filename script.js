@@ -10,7 +10,7 @@ const secondsCard = document.getElementById("seconds-card");
 const tickSound = document.getElementById("tick");
 const finalSound = document.getElementById("final");
 
-/* START TIMER IMMEDIATELY */
+/* START TIMER */
 function startTimer() {
   if (interval) return;
 
@@ -24,8 +24,7 @@ function startTimer() {
 
   if (totalSeconds === 0) return;
 
-  updateUI(); // show instantly
-
+  updateUI();
   interval = setInterval(runTimer, 1000);
 }
 
@@ -133,3 +132,13 @@ function animateParticles() {
 }
 
 animateParticles();
+
+/* ✅ AUTO START WHEN USER ENTERS TIME */
+document.querySelectorAll(".controls input").forEach(input => {
+  input.addEventListener("input", () => {
+    if (!interval) {
+      totalSeconds = 0; // reset old value
+      startTimer();     // start immediately
+    }
+  });
+});
