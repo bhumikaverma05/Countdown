@@ -3,55 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Linpack Countdown</title>
+  <title>Countdown</title>
 
-  <link href="https://fonts.cdnfonts.com/css/leaves-brown" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/st-lucia" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <canvas id="particles"></canvas>
 
-  <div class="app">
-    <h1 class="main-title">COUNTDOWN</h1>
+  <video autoplay muted loop playsinline class="vortex-wallpaper">
+    <source src="background.mp4" type="video/mp4">
+  </video>
 
-    <div class="timer">
-      <div class="card" id="hours">00</div>
-      <div class="card" id="minutes">00</div>
-      <div class="card" id="seconds-card">
-        <span id="seconds">00</span>
-      </div>
+  <!-- Dark Overlay -->
+  <div class="overlay"></div>
+
+  <main class="hud">
+
+    <h2 class="top-label">TIME LEFT</h2>
+
+    <div class="timer-display">
+      <span id="timeText">00:00:00</span>
     </div>
 
-    <div class="controls">
+    <p class="status-text">Linpack Club</p>
+
+    <!-- Progress Bar -->
+    <div class="bar-wrap">
+      <div class="bar-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Preset Chips -->
+    <div class="preset-row">
+      <button onclick="setPreset(3)">3 min</button>
+      <button onclick="setPreset(5)">5 min</button>
+      <button onclick="setPreset(10)">10 min</button>
+      <button onclick="setPreset(25)">25 min</button>
+    </div>
+
+    <!-- Inputs -->
+    <div class="input-panel">
       <input type="number" id="setHours" placeholder="Hrs" min="0">
       <input type="number" id="setMinutes" placeholder="Min" min="0">
       <input type="number" id="setSeconds" placeholder="Sec" min="0">
     </div>
 
-    <div class="buttons">
-      <div class="pill-indicator"></div>
-
+    <!-- Buttons -->
+    <div class="control-panel">
       <button id="startBtn" onclick="startTimer()">Start</button>
       <button id="pauseBtn" onclick="pauseTimer()">Pause</button>
       <button id="resetBtn" onclick="resetTimer()">Reset</button>
     </div>
 
-    <h2 class="club-bottom">Linpack Club</h2>
-  </div>
+  </main>
 
+  <!-- Popup -->
   <div id="popup" class="popup">
     <div class="popup-box">
-      <h2>Time Over</h2>
-      <p id="popup-message">You ran out of time.</p>
-      <button onclick="closePopup()">OK</button>
+      <h2>Mission Complete</h2>
+      <p id="popup-message"></p>
+      <button onclick="closePopup()">Return</button>
     </div>
   </div>
-
-  <audio id="tick" src="https://assets.mixkit.co/sfx/preview/mixkit-clock-tick-1045.mp3"></audio>
-  <audio id="final" src="https://assets.mixkit.co/sfx/preview/mixkit-fast-countdown-922.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
